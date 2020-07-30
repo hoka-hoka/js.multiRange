@@ -1,14 +1,17 @@
+body {
+  margin: 0;
+}
 :root {
   --thumb-color-start: #6FCF97;
   --thumb-color-stop: #66D2EA;
   --track-background: linear-gradient(to bottom, var(--thumb-color-start) 0%, var(--thumb-color-stop) 80%);
-
+  --height: 10px;
 }
 .thumb {
   position: absolute;
   left: var(--start);
   right: calc(100% - var(--stop));
-  height: 6px;
+  height: var(--height);
   background: linear-gradient(to bottom, var(--thumb-color-start), var(--thumb-color-stop)) no-repeat;
   z-index: 1;
 }
@@ -17,15 +20,20 @@ input[type="range"].multirange {
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 6px;
+  height: var(--height);
   display: inline-block;
   vertical-align: top;
   margin: 0;
 }
+
 input[type="range"].multirange.basic {
   position: absolute;
 }
-
+input[type="range"].multirange.ghost {
+  position: relative;
+  border: 1px solid rgba(31, 32, 65, 0.25);
+  border-radius: 3px;
+}
 
 input[type="range"].multirange::-webkit-slider-thumb {
   position: relative;
@@ -47,44 +55,31 @@ input[type="range"].multirange::-moz-range-thumb {
   background: var(--track-background);
   z-index: 2;
 }
-/*
 
-input[type="range"].multirange:hover, input[type="range"].multirange:focus {
-  border: none;
+input[type="range"].multirange:focus {
+  outline: 1px solid green;
 }
-
-
-
-
 input[type="range"].multirange:focus::-webkit-slider-thumb {
-  border: 1px solid rgba(31, 32, 65, 0.25);
-}
-input[type="range"].multirange.ghost::-webkit-slider-thumb {
-  position: absolute;
-  top: -3px;
+  border: 1px solid red;
 }
 
-
-input[type="range"].multirange::-moz-range-track {
+/*input[type="range"].multirange::-moz-range-track {
   border-color: transparent; // needed to switch FF to "styleable" control
 }
 input[type="range"].multirange:focus::-moz-range-track {
   border: 1px solid rgba(31, 32, 65, 0.25);
 }
-
-input[type="range"].multirange.ghost {
-  position: relative;
-  border: 1px solid rgba(31, 32, 65, 0.25);
-  border-radius: 3px;
-}
-
-input[type="range"].multirange.ghost::-webkit-slider-runnable-track {
-  position: relative;
-  height: 6px;
-}
-
 input[type="range"].multirange.ghost::-moz-range-track {
   background: var(--track-background);
 }
 }
 */
+
+
+input[type="range"].basic::after {
+  position: absolute;
+  content: '';
+  border: 1px solid #000;
+  width: 20px;
+  height: 20px;
+}
