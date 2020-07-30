@@ -1,0 +1,37 @@
+.jcm__area {
+   height: 200px;
+   background: gray;
+}
+.jcm__menu
+{
+   position: absolute;
+   z-index: 1000;
+   display: none;
+   background-color: menu;
+   list-style-type: none !important;
+   margin: 0 !important;
+   padding: 0 !important;
+}
+
+.jcm__menu *
+{
+   color: menutext;
+}
+
+.jcm__menu > li
+{
+   border: 1px solid black;
+   margin: 0 !important;
+   padding: 2px 5px !important;
+}
+
+.jcm__menu > li:hover
+{
+   background-color: activecaption;
+}
+
+.jcm__menu > li a
+{
+   display: block;
+   text-decoration: none;
+}

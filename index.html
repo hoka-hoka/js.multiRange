@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1 class="header">Jqia Context Menu plugin demo</h1>
+
+
+
+  <input class="multirange" type="range" value="10, 40" min="20" max="60" multirange>
+  <!-- <input class="multirange copy" type="range" value="10, 50" multirange> -->
+
+  <script src="node_modules/jquery/jquery.js"></script>
+  <script src="jquery.multiRange.js"></script>
+
+  <script>
+    window.addEventListener('load', () => {
+      $('.multirange').multiRange();
+    });
+
+
+  </script>
+
+</body>
+</html>
