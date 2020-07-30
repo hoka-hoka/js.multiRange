@@ -1,37 +1,90 @@
-.jcm__area {
-   height: 200px;
-   background: gray;
+:root {
+  --thumb-color-start: #6FCF97;
+  --thumb-color-stop: #66D2EA;
+  --track-background: linear-gradient(to bottom, var(--thumb-color-start) 0%, var(--thumb-color-stop) 80%);
+
 }
-.jcm__menu
-{
-   position: absolute;
-   z-index: 1000;
-   display: none;
-   background-color: menu;
-   list-style-type: none !important;
-   margin: 0 !important;
-   padding: 0 !important;
+.thumb {
+  position: absolute;
+  left: var(--start);
+  right: calc(100% - var(--stop));
+  height: 6px;
+  background: linear-gradient(to bottom, var(--thumb-color-start), var(--thumb-color-stop)) no-repeat;
+  z-index: 1;
+}
+input[type="range"].multirange {
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 6px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+}
+input[type="range"].multirange.basic {
+  position: absolute;
 }
 
-.jcm__menu *
-{
-   color: menutext;
+
+input[type="range"].multirange::-webkit-slider-thumb {
+  position: relative;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 0 0 2px #fff;
+  border-radius: 50%;
+  background: var(--track-background);
+  /*z-index: 2;*/
+}
+input[type="range"].multirange::-moz-range-thumb {
+  transform: scale(1);
+  border: none;
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 0 0 2px #fff;
+  border-radius: 50%;
+  background: var(--track-background);
+  /*z-index: 2;*/
+}
+/*
+
+input[type="range"].multirange:hover, input[type="range"].multirange:focus {
+  border: none;
 }
 
-.jcm__menu > li
-{
-   border: 1px solid black;
-   margin: 0 !important;
-   padding: 2px 5px !important;
+
+
+
+input[type="range"].multirange:focus::-webkit-slider-thumb {
+  border: 1px solid rgba(31, 32, 65, 0.25);
+}
+input[type="range"].multirange.ghost::-webkit-slider-thumb {
+  position: absolute;
+  top: -3px;
 }
 
-.jcm__menu > li:hover
-{
-   background-color: activecaption;
+
+input[type="range"].multirange::-moz-range-track {
+  border-color: transparent; // needed to switch FF to "styleable" control
+}
+input[type="range"].multirange:focus::-moz-range-track {
+  border: 1px solid rgba(31, 32, 65, 0.25);
 }
 
-.jcm__menu > li a
-{
-   display: block;
-   text-decoration: none;
+input[type="range"].multirange.ghost {
+  position: relative;
+  border: 1px solid rgba(31, 32, 65, 0.25);
+  border-radius: 3px;
 }
+
+input[type="range"].multirange.ghost::-webkit-slider-runnable-track {
+  position: relative;
+  height: 6px;
+}
+
+input[type="range"].multirange.ghost::-moz-range-track {
+  background: var(--track-background);
+}
+}
+*/
