@@ -24,22 +24,32 @@
       this._options = options;
       this._min = this._options.range.attr('min') || 0;
       this._max = this._options.range.attr('max') || 100;
+      this.valueLow = 0;
+      this.valueHight = this._options.range.val();
     }
 
     init() {
-
-      const hasProperty = prop => {
-        return current.hasAttribute(prop) || this._options[prop];
-      }
-      const addThumb = function() {
+      const addThumb = () => {
         return $('<div class="thumb">');
+      }
+      const send = () => {
+        this.emit('moveRange');
+        this.followProperty();
+        this.updateProperty();
+      }
+      const setDirection = () => {
+        if ( this.hasProperty('direction', 'left') ) {
+
+          [this.valueLow, this.valueHight] = [this.valueHight, this.valueLow];
+
+        } else return;
       }
 
       let current = this._options.range[0];
       let value = current.getAttribute('value');
       let values = value === null ? [] : value.split(',');
 
-      if ( hasProperty('multirange') ) {
+      if ( this.hasProperty('multirange', 'multirange') ) {
         this.ghost = $(current).clone().addClass('ghost');
         current = $(current).addClass('basic');
 
@@ -52,25 +62,29 @@
 
         this.thumb = addThumb();
         this.emit('addRange', {current, add: [this.ghost, this.thumb]});
-
-        this.emit('moveRange');
-        this.followProperty();
-        this.updateProperty();
+        send();
 
       } else {
-        current = $(current).addClass('basic');;
+
+        setDirection();
+
+        current = $(current).addClass('basic');
         this.thumb = addThumb();
         this.emit('addRange', {current, add: [this.thumb]});
-        this.emit('moveRange');
-        this.followProperty();
-        this.updateProperty();
+        send();
       }
+    }
+    hasProperty(prop, value) {
+      let current = this._options.range[0];
+      return ~($.inArray(value, [$(current).data(prop), this._options[prop]]));
     }
 
     followProperty() {
-      let opt = this._options;
-      this.valueLow = this.ghost ? Math.min(opt.range.val(), this.ghost.val()) : 0
-      this.valueHight = this.ghost ? Math.max(opt.range.val(), this.ghost.val()) : opt.range.val();
+      const opt = this._options;
+      console.log(this.valueLow, this.valueHight);
+      this.valueLow = this.ghost ? Math.min(opt.range.val(), this.ghost.val()) : 0 || this.valueLow;
+      this.valueHight = this.ghost ? Math.max(opt.range.val(), this.ghost.val()) : opt.range.val() || this.valueHight;
+      console.log(this.valueLow, this.valueHight);
     }
 
     updateProperty() {
@@ -89,6 +103,8 @@
     constructor(model) {
       super();
       this._model = model;
+      let opt = model._options;
+      opt.range.parent().height(opt.range.height());
     }
     addRange(range, add) {
       range.current.after(add);
@@ -116,7 +132,8 @@
       });
     }
     moveRange() {
-      $('input.' + namespace).on('input', (e) => {
+      let opt = this._model._options;
+      $(opt.range.add(opt.range.siblings('.ghost'))).on('input', (e) => {
         this._model.followProperty();
         e.stopPropagation();
         this._model.updateProperty();
