@@ -27,16 +27,21 @@
     }
 
     init() {
+
+      const hasProperty = prop => {
+        return current.hasAttribute(prop) || this._options[prop];
+      }
+      const addThumb = function() {
+        return $('<div class="thumb">');
+      }
+
       let current = this._options.range[0];
       let value = current.getAttribute('value');
       let values = value === null ? [] : value.split(',');
 
-      if ( current.hasAttribute('multirange') ) {
-        current = $(current);
-
-        this.ghost = current.clone().addClass('ghost');
-        current.addClass('basic');
-        this.thumb = $('<div class="thumb">');
+      if ( hasProperty('multirange') ) {
+        this.ghost = $(current).clone().addClass('ghost');
+        current = $(current).addClass('basic');
 
         const expr =  this._min + (this._max - this._min) / 2;
 
@@ -45,29 +50,37 @@
         this.ghost.attr('value', values[1] || expr);
         this.ghost.prop({value: values[1] || expr}); // !!!
 
+        this.thumb = addThumb();
         this.emit('addRange', {current, add: [this.ghost, this.thumb]});
-        this.emit('moveRange')[0];
 
+        this.emit('moveRange');
         this.followProperty();
-        this.updateProperty()
+        this.updateProperty();
+
+      } else {
+        current = $(current).addClass('basic');;
+        this.thumb = addThumb();
+        this.emit('addRange', {current, add: [this.thumb]});
+        this.emit('moveRange');
+        this.followProperty();
+        this.updateProperty();
       }
     }
 
     followProperty() {
       let opt = this._options;
-      opt.valueLow = Math.min(opt.range.val(), this.ghost.val())
-      opt.valueHight = Math.max(opt.range.val(), this.ghost.val());
+      this.valueLow = this.ghost ? Math.min(opt.range.val(), this.ghost.val()) : 0
+      this.valueHight = this.ghost ? Math.max(opt.range.val(), this.ghost.val()) : opt.range.val();
     }
 
     updateProperty() {
       let opt = this._options;
-
       function getPercent(value) {
         return 100 * ((value - this._min) / (this._max - this._min)) + '%';
       };
       this.emit('updateRange', {
         el: this.thumb,
-        pos: [getPercent.call(this, opt.valueLow), getPercent.call(this, opt.valueHight)]
+        pos: [getPercent.call(this, this.valueLow), getPercent.call(this, this.valueHight)]
       });
     }
   };
@@ -103,7 +116,6 @@
       });
     }
     moveRange() {
-
       $('input.' + namespace).on('input', (e) => {
         this._model.followProperty();
         e.stopPropagation();
@@ -115,18 +127,15 @@
     }
   };
 
-  $.fn.multiRange = function() {
-    this.map((i, v) => {
-      let options = {
-        index: i,
-        range: $(v)
-      };
+  $.fn.multiRange = function(options) {
+    let option = options;
+    this.map(function(i, v) {
+      let target = { index: i, range: $(v) };
+      options = $.extend(target, option);
       const model = new ListModel(options);
       const view = new ListView(model);
       const controller = new ListController(model, view);
       model.init();
     });
-
   };
-
 })(jQuery);

@@ -7,16 +7,27 @@
 </head>
 <body>
   <h1 class="header">Jqia Context Menu plugin demo</h1>
+  <div>
+    <input class="multirange r1" type="range" value="10,40" min="0" max="100"
+    multirange="multirange"
+    >
+  </div>
+  <div>
+    <input class="multirange r2" type="range" value="10,40" min="0" max="100">
+  </div>
 
-  <input class="multirange" type="range" value="10,40" min="0" max="100" multirange>
-  <!-- <input class="multirange copy" type="range" value="10, 50" multirange> -->
-  <input class="multirange" type="range" value="10,40" min="0" max="100" multirange>
+
+
   <script src="node_modules/jquery/jquery.js"></script>
   <script src="jquery.multiRange.js"></script>
 
   <script>
     window.addEventListener('load', () => {
-      $('.multirange').multiRange();
+      $('.r1').multiRange({
+        thumb: true,
+        multirange: 'multirange'
+      });
+      $('.r2').multiRange();
     });
 
 

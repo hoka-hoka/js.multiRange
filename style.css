@@ -74,12 +74,3 @@ input[type="range"].multirange.ghost::-moz-range-track {
 }
 }
 */
-
-
-input[type="range"].basic::after {
-  position: absolute;
-  content: '';
-  border: 1px solid #000;
-  width: 20px;
-  height: 20px;
-}
