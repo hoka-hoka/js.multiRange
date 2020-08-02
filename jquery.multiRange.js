@@ -24,6 +24,7 @@
       this._options = options;
       this._min = this._options.range.attr('min') || 0;
       this._max = this._options.range.attr('max') || 100;
+      this.fault = 0;
     }
 
     init() {
@@ -77,7 +78,6 @@
 
     Popub(values) {
       if ( this.hasProperty('popub', values) ) {
-        console.log('1');
         let arrow = $('<div class="popub"><div class="arrow"></div>');
         this.emit('addRange', {current: this.thumb, add: [arrow], method: 'append'});
       }
@@ -109,13 +109,28 @@
     }
 
     updateProperty() {
-      let opt = this._options;
-      function getPercent(value) {
+      let positionPercent = value => {
         return 100 * ((value - this._min) / (this._max - this._min)) + '%';
+      }
+      let faultRight = value => {
+        return this._options.toffeeSize * (value - this._min) / (this._max - this._min);
+      }
+      let faultLeft = value => {
+        return this._options.toffeeSize * (this._max - value) / (this._max - this._min);
+      }
+      function* revisionPercent() {
+        for (var i = 0; i < 2; i++) {
+          if ( !i ) {
+            yield `${positionPercent(this.valueLow)} - ${faultRight(this.valueLow)}px`;
+          } else {
+            yield `${positionPercent(this.valueHight)} + ${faultLeft(this.valueHight)}px`;
+          }
+        }
       };
+      let percent = [...revisionPercent.call(this)];
       this.emit('updateRange', {
         el: this.thumb,
-        pos: [getPercent.call(this, this.valueLow), getPercent.call(this, this.valueHight)]
+        pos: percent
       });
     }
   };
@@ -127,12 +142,14 @@
       let opt = model._options;
       opt.range.parent().height(opt.range.height());
     }
+
     addRange(range, add, method = 'after') {
       range.current[method](add);
     }
+
     updateRange(obj) {
-      obj.el.css("--start", obj.pos[0]);
-      obj.el.css("--stop", obj.pos[1]);
+      obj.el.css("--start", 'calc(' + obj.pos[0] + ')');
+      obj.el.css("--stop", 'calc(' + obj.pos[1] + ')');
     }
   };
 
@@ -144,14 +161,14 @@
       this._model.on('addRange', (r) => this.addRange(r));
       this._model.on('moveRange', () => this.moveRange());
       this._model.on('updateRange', (t) => this.updateRange(t));
-
-
     }
+
     addRange(range) {
       range.add.map(v => {
         this._view.addRange(range, v, range.method);
       });
     }
+
     moveRange() {
       let opt = this._model._options;
       $(opt.range.add(opt.range.siblings('.ghost'))).on('input', (e) => {
@@ -160,6 +177,7 @@
         this._model.updateProperty();
       });
     }
+
     updateRange(obj) {
       this._view.updateRange(obj);
     }
@@ -168,7 +186,7 @@
   $.fn.multiRange = function(options) {
     let option = options;
     this.map(function(i, v) {
-      let target = { index: i, range: $(v) };
+      let target = { index: i, range: $(v), toffeeSize: 0 };
       options = $.extend(target, option);
       const model = new ListModel(options);
       const view = new ListView(model);

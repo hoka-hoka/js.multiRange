@@ -17,7 +17,7 @@
     <input class="multirange r3" type="range" value="40" min="0" max="100" data-direction="left">
   </div>
   <div>
-    <input class="multirange r3" type="range" value="40" min="0" max="100" data-popub="true">
+    <input class="multirange r3" type="range" value="10, 40" min="0" max="100" data-multirange="multirange"  data-popub="true">
   </div>
 
 
@@ -28,10 +28,12 @@
 
   <script>
     window.addEventListener('load', () => {
-      $('.r1').multiRange({});
+      $('.r1').multiRange({
+        toffeeSize: 12
+      });
       $('.r2').multiRange();
       $('.r3').multiRange({
-        // direction: 'left'
+        toffeeSize: 12
       });
     });
 
