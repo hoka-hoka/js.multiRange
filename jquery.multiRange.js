@@ -24,10 +24,7 @@
       this._options = options;
       this._min = this._options.range.attr('min') || 0;
       this._max = this._options.range.attr('max') || 100;
-      this.direction = 3;
     }
-
-
 
     init() {
       const addThumb = () => {
@@ -63,6 +60,7 @@
         this.emit('addRange', {current, add: [this.thumb]});
       }
       this.Direction = ['left', 'right'];
+      this.Popub(true);
       send();
 
     }
@@ -77,17 +75,26 @@
       this.valueHight = this.Direction[1];
     }
 
-     set Direction(values) {
-      $.map(values, v => {
-        if ( this.hasProperty('multirange', 'multirange') ) {
-          this.direction = 1;
+    Popub(values) {
+      if ( this.hasProperty('popub', values) ) {
+        console.log('1');
+        let arrow = $('<div class="popub"><div class="arrow"></div>');
+        this.emit('addRange', {current: this.thumb, add: [arrow], method: 'append'});
+      }
+    }
+
+    set Direction(values) {
+    this.direction = 3;
+    $.map(values, v => {
+      if ( this.hasProperty('multirange', 'multirange') ) {
+        this.direction = 1;
+      }
+      else if ( this.hasProperty('direction', v) ) {
+        if ( v === 'left' ) {
+          this.direction = 2;
         }
-        else if ( this.hasProperty('direction', v) ) {
-          if ( v === 'left' ) {
-            this.direction = 2;
-          }
-        }
-      });
+      }
+    });
     }
 
     get Direction() {
@@ -120,8 +127,8 @@
       let opt = model._options;
       opt.range.parent().height(opt.range.height());
     }
-    addRange(range, add) {
-      range.current.after(add);
+    addRange(range, add, method = 'after') {
+      range.current[method](add);
     }
     updateRange(obj) {
       obj.el.css("--start", obj.pos[0]);
@@ -142,7 +149,7 @@
     }
     addRange(range) {
       range.add.map(v => {
-        this._view.addRange(range, v);
+        this._view.addRange(range, v, range.method);
       });
     }
     moveRange() {

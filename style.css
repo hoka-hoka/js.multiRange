@@ -74,6 +74,29 @@ input[type="range"].multirange.ghost::-moz-range-track {
 }
 }
 */
-div {
+body > div {
   margin-bottom: 20px;
+}
+.thumb > .popub::after, .thumb > .popub::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+}
+
+.thumb > .popub::after {
+  right: 0;
+}
+
+
+.arrow::after, .arrow::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border: 2px solid red;
+}
+.arrow::after {
+  right: 0;
 }
