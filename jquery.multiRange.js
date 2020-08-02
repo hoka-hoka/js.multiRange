@@ -24,9 +24,10 @@
       this._options = options;
       this._min = this._options.range.attr('min') || 0;
       this._max = this._options.range.attr('max') || 100;
-      this.valueLow = 0;
-      this.valueHight = this._options.range.val();
+      this.direction = 3;
     }
+
+
 
     init() {
       const addThumb = () => {
@@ -36,13 +37,6 @@
         this.emit('moveRange');
         this.followProperty();
         this.updateProperty();
-      }
-      const setDirection = () => {
-        if ( this.hasProperty('direction', 'left') ) {
-
-          [this.valueLow, this.valueHight] = [this.valueHight, this.valueLow];
-
-        } else return;
       }
 
       let current = this._options.range[0];
@@ -62,29 +56,49 @@
 
         this.thumb = addThumb();
         this.emit('addRange', {current, add: [this.ghost, this.thumb]});
-        send();
-
-      } else {
-
-        setDirection();
-
+      }
+      else {
         current = $(current).addClass('basic');
         this.thumb = addThumb();
         this.emit('addRange', {current, add: [this.thumb]});
-        send();
       }
+      this.Direction = ['left', 'right'];
+      send();
+
     }
+
     hasProperty(prop, value) {
       let current = this._options.range[0];
       return ~($.inArray(value, [$(current).data(prop), this._options[prop]]));
     }
 
     followProperty() {
-      const opt = this._options;
-      console.log(this.valueLow, this.valueHight);
-      this.valueLow = this.ghost ? Math.min(opt.range.val(), this.ghost.val()) : 0 || this.valueLow;
-      this.valueHight = this.ghost ? Math.max(opt.range.val(), this.ghost.val()) : opt.range.val() || this.valueHight;
-      console.log(this.valueLow, this.valueHight);
+      this.valueLow = this.Direction[0];
+      this.valueHight = this.Direction[1];
+    }
+
+     set Direction(values) {
+      $.map(values, v => {
+        if ( this.hasProperty('multirange', 'multirange') ) {
+          this.direction = 1;
+        }
+        else if ( this.hasProperty('direction', v) ) {
+          if ( v === 'left' ) {
+            this.direction = 2;
+          }
+        }
+      });
+    }
+
+    get Direction() {
+      let opt = this._options;
+      switch(this.direction) {
+        case 1: return [Math.min(opt.range.val(), this.ghost.val()), Math.max(opt.range.val(), this.ghost.val())];
+        break;
+        case 2: return [opt.range.val(), 100];
+        break;
+        default: return [0, opt.range.val()];
+      }
     }
 
     updateProperty() {
