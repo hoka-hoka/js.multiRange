@@ -31,11 +31,6 @@
       const addThumb = () => {
         return $('<div class="thumb">');
       }
-      const send = () => {
-        this.emit('moveRange');
-        this.followProperty();
-        this.updateProperty();
-      }
 
       let current = this._options.range[0];
       let value = current.getAttribute('value');
@@ -61,8 +56,11 @@
         this.emit('addRange', {current, add: [this.thumb]});
       }
       this.Direction = ['left', 'right'];
-      this.Popub(true);
-      send();
+      this.popub = this.Popub(true);
+
+      this.emit('moveRange');
+      this.followProperty();
+      this.updateProperty();
 
     }
 
@@ -78,8 +76,16 @@
 
     Popub(values) {
       if ( this.hasProperty('popub', values) ) {
-        let arrow = $('<div class="popub"><div class="arrow"></div>');
-        this.emit('addRange', {current: this.thumb, add: [arrow], method: 'append'});
+        let arrow = $('<div class="popub"><span></span><div class="arrow"></div>');
+        if ( this.ghost ) {
+          let arrowClone = arrow.clone(true);
+          this.emit('addRange', {current: this.thumb, add: [arrow, arrowClone], method: 'append'});
+
+        }
+        else {
+          this.emit('addRange', {current: this.thumb, add: [arrow], method: 'append'});
+        }
+        return true;
       }
     }
 
@@ -109,13 +115,13 @@
     }
 
     updateProperty() {
-      let positionPercent = value => {
+      const positionPercent = value => {
         return 100 * ((value - this._min) / (this._max - this._min)) + '%';
       }
-      let faultRight = value => {
+      const faultRight = value => {
         return this._options.toffeeSize * (value - this._min) / (this._max - this._min);
       }
-      let faultLeft = value => {
+      const faultLeft = value => {
         return this._options.toffeeSize * (this._max - value) / (this._max - this._min);
       }
       function* revisionPercent() {
@@ -132,6 +138,12 @@
         el: this.thumb,
         pos: percent
       });
+      if ( this.popub ) {
+        this.emit('updatePopub', {
+        el: $(this.thumb),
+        pos: [this.valueLow, this.valueHight]
+      });
+      }
     }
   };
 
@@ -151,6 +163,11 @@
       obj.el.css("--start", 'calc(' + obj.pos[0] + ')');
       obj.el.css("--stop", 'calc(' + obj.pos[1] + ')');
     }
+    updatePopub(obj) {
+      obj.el.children().each(function(i) {
+        $(this).children()[0].innerHTML = obj.pos[i];
+      });
+    }
   };
 
   class ListController extends EventEmitter {
@@ -158,9 +175,10 @@
       super();
       this._model = model;
       this._view = view;
-      this._model.on('addRange', (r) => this.addRange(r));
+      this._model.on('addRange', (t) => this.addRange(t));
       this._model.on('moveRange', () => this.moveRange());
       this._model.on('updateRange', (t) => this.updateRange(t));
+      this._model.on('updatePopub', (t) => this.updatePopub(t));
     }
 
     addRange(range) {
@@ -180,6 +198,9 @@
 
     updateRange(obj) {
       this._view.updateRange(obj);
+    }
+    updatePopub(obj) {
+      this._view.updatePopub(obj);
     }
   };
 
