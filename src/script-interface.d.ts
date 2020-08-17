@@ -5,6 +5,7 @@ interface multiRangeOptionsSettings {
   range?: HTMLInputElement,
   min?: string | number,
   max?: string | number,
+  listener?: JQuery<HTMLElement>
   range: HTMLElement,
 }
 
@@ -49,6 +50,8 @@ interface ListModelSettings {
   Popup(value: boolean): boolean,
   Rotate(value: boolean): void,
   Scale(value: boolean): void,
+  updateProperty(): void,
+  followProperty(): void
 }
 
 interface ListViewSettings {

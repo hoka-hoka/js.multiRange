@@ -42,6 +42,7 @@
       let current: JQuery<HTMLInputElement> = $(this.current);
 
       if ( this.hasProperty('multirange', 'multirange') ) {
+
         this.ghost = current.clone().addClass('ghost');
         current = current.addClass('basic');
         const expr: number =  this._options.min + (this._options.max - this._options.min) / 2;
@@ -116,7 +117,7 @@
     Rotate(value: boolean) {
       if ( this.hasProperty('rotate', value) ) {
         let rangeParent: JQuery<HTMLElement> = $(this._options.range).parent();
-        console.log(this._options.range, rangeParent);
+
         this.emit('addClass', { element: rangeParent, add: 'rotate--90' });
       }
     }
@@ -129,7 +130,6 @@
         let scale: JQuery<HTMLElement> = $('<ul class="scale"></ul>');
 
         while(step <= 10) {
-          console.log(this._options.min, diff*step);
           scale.append(`<li class="scale__item">${+this._options.min + diff*step}</li>`);
           ++step;
         }
@@ -239,10 +239,12 @@
 
     moveRange(): void {
       let range: JQuery<HTMLElement> = $(this._model._options.range);
+      //let listener: JQuery<HTMLElement> = this._model._options.listener;
+
       range.add(range.siblings('.ghost')).on('input', (e) => {
-        this._model.followProperty();
-        e.stopPropagation();
-        this._model.updateProperty();
+          this._model.followProperty();
+          e.stopPropagation();
+          this._model.updateProperty();
       });
     }
 
@@ -278,6 +280,7 @@
         const model = new ListModel(options);
         const view = new ListView(model);
         const controller = new ListController(model, view);
+        $(this).data('controller',controller);
         model.init();
       });
 
