@@ -2,6 +2,7 @@ interface multiRangeOptionsSettings {
   multirange?: 'multirange',
   scale?: 'true' | boolean,
   toffeeSize?: number,
+  popup?: string | boolean,
   range?: HTMLInputElement,
   min?: string | number,
   max?: string | number,

@@ -91,7 +91,7 @@
             return [Math.min(range.val() as number, this.ghost.val() as number),
             Math.max(range.val() as number, this.ghost.val() as number)];
           }
-          else throw new Error("feefe");
+          else throw new Error("не найден ghost");
         break;
         case 2: return [range.val() as number, 100];
         break;
@@ -286,7 +286,6 @@
 
     return this
   },
-
   {
     propertys: {
       toffeeSize: 0,
