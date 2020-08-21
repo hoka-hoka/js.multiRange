@@ -5,16 +5,43 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc"
+    "test": "node ./src/tests/testconfig.js",
+    "build:css": "scss",
+    "build:js": "run-s compile babel",
+    "build": "npm-run-all build:css build:js",
+    "deploy:css": "copyfiles -f src/css/*.css dist/css/",
+    "deploy:js": "uglifyjs-folder --config-file \"./uglify.config.json\" src/js/ -eo dist/js",
+    "deploy": "run-s deploy:css deploy:js autoprefixer",
+    "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
+    "compile": "tsc",
+    "scss": "node-sass --indent-type tab --output-style nested src/sass/ -o src/css/",
+    "babel": "babel src/js --out-dir src/js",
+    "serve": "browser-sync start --server --files 'src/css/*.css, src/js/*.js'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.5.1"
+    "@babel/polyfill": "^7.10.4",
+    "jquery": "^3.5.1",
+    "onchange": "^7.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
     "@types/jquery": "^3.5.1",
-    "typescript": "^3.9.7"
+    "app-root-path": "^3.0.0",
+    "autoprefixer": "^9.8.6",
+    "browser-sync": "^2.26.12",
+    "copyfiles": "^2.3.0",
+    "lodash": "^4.17.20",
+    "node-qunit-puppeteer": "^2.0.3",
+    "node-sass": "^4.14.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.1",
+    "qunit": "^2.11.0",
+    "typescript": "^3.9.7",
+    "uglifyjs-folder": "^2.0.0"
   }
 }

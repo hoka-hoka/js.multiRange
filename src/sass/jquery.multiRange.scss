@@ -7,20 +7,24 @@ body *:after, body *:before {
 body {
   margin: 0;
 }
+body > div {
+  margin-bottom: 30px;
+  position: relative;
+}
 :root {
-
   --thumb-color-start: rgb(17,158,183);
   --thumb-color-stop: rgb(103 178 195);
   --thumb-background: linear-gradient(to top, var(--thumb-color-start) 0%, var(--thumb-color-stop) 80%);
-
+  --range-width: 16px;
+  --range-height: 16px;
   --track-background: rgb(153,153,153);
-  --height: 10px;
+  --thumb-height: 10px;
 }
 .thumb {
   position: absolute;
   left: var(--start);
   right: calc(100% - var(--stop));
-  height: var(--height);
+  height: var(--thumb-height);
   background: var(--thumb-background);
   z-index: 1;
 }
@@ -29,7 +33,7 @@ input[type="range"].range {
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: var(--height);
+  height: var(--thumb-height);
   display: inline-block;
   vertical-align: top;
   margin: 0;
@@ -47,25 +51,24 @@ input[type="range"].range.ghost {
 }
 
 input[type="range"].range::-webkit-slider-thumb {
+  width: var(--range-width);
+  height: var(--range-height);
+  box-shadow: 0 0 1px 2px rgb(150,150,150);
+  background: rgb(240,240,240);
+  z-index: 2;
   position: relative;
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  box-shadow: 0 0 1px 2px rgb(150,150,150);
   border-radius: 50%;
-  background: rgb(240,240,240);
-  z-index: 2;
-
 }
 input[type="range"].range::-moz-range-thumb {
-  transform: scale(1);
-  border: none;
-  width: 16px;
-  height: 16px;
+  width: var(--range-width);
+  height: var(--range-height);
   box-shadow: 0 0 1px 2px rgb(150,150,150);
-  border-radius: 50%;
   background: rgb(240,240,240);
   z-index: 2;
+  transform: scale(1);
+  border: none;
+  border-radius: 50%;
 }
 
 input[type="range"].range:focus {
@@ -90,14 +93,6 @@ input[type="range"].range.ghost::-moz-range-track {
 }
 }
 */
-body > div {
-  margin-bottom: 30px;
-  position: relative;
-}
-
-.r6 {
-  width: 100px;
-}
 .multirange {
   font-family: 'Arial';
   /*clip-path: inset(-32px -5px -32px -5px);*/
@@ -141,13 +136,11 @@ body > div {
   font-size: 11px;
   user-select: none;
 }
-
 .arrow, .arrow:after {
   border: solid;
   border-width: 5px;
 
 }
-
 .arrow {
   position: absolute;
   bottom: -6px;

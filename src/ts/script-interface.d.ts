@@ -1,13 +1,13 @@
 interface multiRangeOptionsSettings {
-  multirange?: 'multirange',
-  scale?: 'true' | boolean,
+  range: HTMLElement,
+  multirange?: 'multirange' | boolean,
+  scale?: boolean,
   toffeeSize?: number,
-  popup?: string | boolean,
-  range?: HTMLInputElement,
+  popup?: boolean,
+  range?: HTMLInputElement | null,
   min?: string | number,
   max?: string | number,
-  listener?: JQuery<HTMLElement>
-  range: HTMLElement,
+  direction?: 'left' | 'right'
 }
 
 interface multiRangeDefaultSettings {

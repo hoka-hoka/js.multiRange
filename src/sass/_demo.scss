@@ -1,3 +1,9 @@
+$font: 'Indie Flower', cursive;
+:root {
+  --gr-start: rgb(99,195,224);
+  --gr-stop: rgb(42,174,212);
+}
+
 body *:after, body *:before {
   box-sizing: border-box;
 }
@@ -5,12 +11,11 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Indie Flower', cursive;
-
+  font-family: $font;
 }
 header {
   padding: 1em calc(50% - 23em);
-  background: radial-gradient(at 50% 90%,  rgb(99 195 224) 10%, rgb(42 174 212) );
+  background: radial-gradient(at 50% 90%, var(--gr-start) 10%, var(--gr-stop));
   font-size: 20px;
   color: #fff;
   text-align: center;
@@ -24,7 +29,6 @@ section {
 }
 .demo__menu {
   display: grid;
-
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-template-rows: repeat(3, 200px);
   grid-gap: 10px;
@@ -32,23 +36,25 @@ section {
 .demo__item {
   position: relative;
   width: 100%;
-  list-style: none;
   height: 100%;
+  list-style: none;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 
 }
-.demo__item > div:first-child {
-  display: flex;
-  justify-content: center;
-}
-.demo__item input[type="number"] {
-  margin: 5px;
-  width: 60px;
+.demo__item {
+  & > div:first-child {
+    display: flex;
+    justify-content: center;
+  }
+  & input[type="number"] {
+    margin: 5px;
+    width: 60px;
+  }
 }
 footer {
-  background: rgb(51 51 51);
+  background: rgb(51,51,51);
   height: 64px;
 }
 footer > .container {
@@ -79,13 +85,12 @@ footer a {
   border-width: 5px;
 
 }
-
 .r7 ~ .thumb .arrow {
+  border-color: rgba(0,0,0,0);
+  border-right-width: 0;
   bottom: 0;
   left: 100%;
-  border-color: rgba(0, 0, 0, 0);
-  border-left-color: rgb(0 0 0);
-  border-right-width: 0;
+  border-left-color: rgb(0,0,0);
   top: 50%;
   transform: translate(0, -50%);
 
@@ -94,10 +99,10 @@ footer a {
   top: -32px;
 }
 .r7 ~ .thumb .arrow:after {
-  border-width: 6px;
-  border-color: rgba(0, 0, 0, 0);
-  border-left-color: rgb(255 255 255);
+  border-color: rgba(0,0,0,0);
   border-right-width: 0;
+  border-width: 6px;
+  border-left-color: rgb(255,255,255);
   transform: translate(0, 50%);
   bottom: 0;
   left: -7px;

@@ -34,6 +34,9 @@
         this._options[key] = options[key];
       });
       this.current = this._options.range;
+      if ( !$(this.current).is('input.range[type="range"]')) {
+        $.error(`Плагин неверно инициализирован (прим. <input type="range" class=range>`);
+      }
     }
 
     init() {
@@ -42,7 +45,6 @@
       let current: JQuery<HTMLInputElement> = $(this.current);
 
       if ( this.hasProperty('multirange', 'multirange') ) {
-
         this.ghost = current.clone().addClass('ghost');
         current = current.addClass('basic');
         const expr: number =  this._options.min + (this._options.max - this._options.min) / 2;
@@ -66,8 +68,9 @@
 
     hasProperty<T>(prop: string, value: T): number {
       const currentData: T | undefined = $(this.current).data(prop);
-      const currentProperty: string | undefined = this._options[prop];
-      return ~($.inArray(value, [currentData, currentProperty]));
+      const currentProperty: multiRangeOptionsSettings | undefined = this._options[prop];
+      const status: number = ~($.inArray(value, [currentData, currentProperty]));
+      return status;
     }
 
     set Direction(values: DirectionPromise) {
@@ -276,12 +279,22 @@
           min: $(this).attr('min') || 0,
           max: $(this).attr('max') || 100,
         }
+        if ( $(this).data('controller') ) {
+          $.error('Плагин уже был инициализирован');
+        }
+        Object.keys(propertys).forEach( keys => {
+          if ( !$.fn.multiRange.propertys.hasOwnProperty(keys) ) {
+            $.error('Передаваемого свойства ' + keys + ' не существует'); //
+          }
+        });
+
         let options = $.extend(target, $.fn.multiRange.propertys, propertys);
+
         const model = new ListModel(options);
         const view = new ListView(model);
         const controller = new ListController(model, view);
-        $(this).data('controller',controller);
         model.init();
+        $(this).data('controller', controller);
       });
 
     return this
@@ -289,6 +302,10 @@
   {
     propertys: {
       toffeeSize: 0,
+      multirange: false,
+      popup: false,
+      scale: false,
+      direction: 'right',
     }
   }
 );

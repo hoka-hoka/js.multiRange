@@ -1,0 +1,9 @@
+{
+  "compress": true,
+  "mangle": true,
+  "sourceMap": {
+    "includeSources": true,
+    "root": "dist/js",
+    "url": "{file}.map"
+  }
+}
