@@ -1,0 +1,9 @@
+language: nodejs
+node_js:
+- '14'
+- '13'
+- '12'
+before_script:
+- npm install -g npm@'>=3'
+script:
+- npm run build
