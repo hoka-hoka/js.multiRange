@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "node ./src/tests/testconfig.js",
-    "build:css": "scss",
+    "build:css": "run-s scss",
     "build:js": "run-s compile babel",
     "build": "npm-run-all build:css build:js",
     "deploy:css": "copyfiles -f src/css/*.css dist/css/",
