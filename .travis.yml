@@ -1,4 +1,6 @@
 language: nodejs
+env:
+  SKIP_SASS_BINARY_DOWNLOAD_FOR_CI=true
 node_js:
 - '14'
 - '13'
