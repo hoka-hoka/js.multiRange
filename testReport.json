@@ -18,7 +18,7 @@
               "actual": "function(e,t){return new S.fn.init(e,t)}",
               "testId": "ba9612bd",
               "negative": false,
-              "runtime": 2,
+              "runtime": 4,
               "todo": false,
               "expected": true
             },
@@ -30,7 +30,7 @@
               "actual": "function (propertys) {\n    $.each(this, function (i, v) {\n      let target = {\n        range: v,\n        min: $(this).attr('min') || 0,\n        max: $(this).attr('max') || 100\n      };\n\n      if ($(this).data('controller')) {\n        $.error('Плагин уже был инициализирован');\n      }\n\n      Object.keys(propertys).forEach(keys => {\n        if (!$.fn.multiRange.propertys.hasOwnProperty(keys)) {\n          $.error('Передаваемого свойства ' + keys + ' не существует');\n        }\n      });\n      let options = $.extend(target, $.fn.multiRange.propertys, propertys);\n      const model = new ListModel(options);\n      const view = new ListView(model);\n      const controller = new ListController(model, view);\n      model.init();\n      $(this).data('controller', controller);\n    });\n    return this;\n  }",
               "testId": "ba9612bd",
               "negative": false,
-              "runtime": 3,
+              "runtime": 5,
               "todo": false,
               "expected": true
             },
@@ -48,7 +48,7 @@
               },
               "testId": "ba9612bd",
               "negative": false,
-              "runtime": 3,
+              "runtime": 5,
               "todo": false,
               "expected": true
             },
@@ -66,7 +66,7 @@
               },
               "testId": "ba9612bd",
               "negative": false,
-              "runtime": 4,
+              "runtime": 6,
               "todo": false,
               "expected": {
                 "toffeeSize": 0,
@@ -82,7 +82,7 @@
           "failed": 0,
           "passed": 4,
           "total": 4,
-          "runtime": 4,
+          "runtime": 7,
           "assertions": [
             {
               "result": true,
@@ -118,7 +118,7 @@
               "actual": "Error: Плагин неверно инициализирован (прим. <input type=\"range\" class=range>",
               "testId": "4d29edd1",
               "negative": false,
-              "runtime": 4,
+              "runtime": 5,
               "todo": false,
               "expected": "/Плагин неверно инициализирован/"
             },
@@ -130,7 +130,7 @@
               "actual": "Error: Передаваемого свойства feacture не существует",
               "testId": "4d29edd1",
               "negative": false,
-              "runtime": 5,
+              "runtime": 7,
               "todo": false,
               "expected": "/Передаваемого свойства .*? не существует/"
             }
@@ -140,7 +140,7 @@
           "failed": 0,
           "passed": 2,
           "total": 2,
-          "runtime": 6,
+          "runtime": 7,
           "assertions": [
             {
               "result": true,
@@ -168,7 +168,7 @@
               "actual": "[object Object]",
               "testId": "8925c700",
               "negative": false,
-              "runtime": 559,
+              "runtime": 478,
               "todo": false,
               "expected": true
             },
@@ -180,7 +180,7 @@
               "actual": "[object Object]",
               "testId": "8925c700",
               "negative": true,
-              "runtime": 560,
+              "runtime": 479,
               "todo": false,
               "expected": {}
             },
@@ -192,7 +192,7 @@
               "actual": 1,
               "testId": "8925c700",
               "negative": false,
-              "runtime": 560,
+              "runtime": 480,
               "todo": false,
               "expected": 1
             },
@@ -204,7 +204,7 @@
               "actual": "[object Object]",
               "testId": "8925c700",
               "negative": false,
-              "runtime": 561,
+              "runtime": 481,
               "todo": false,
               "expected": "[object Object]"
             },
@@ -216,7 +216,7 @@
               "actual": "Error: Плагин уже был инициализирован",
               "testId": "8925c700",
               "negative": false,
-              "runtime": 562,
+              "runtime": 482,
               "todo": false,
               "expected": "/Плагин уже был инициализирован/"
             }
@@ -226,7 +226,7 @@
           "failed": 0,
           "passed": 5,
           "total": 5,
-          "runtime": 562,
+          "runtime": 482,
           "assertions": [
             {
               "result": true,
@@ -266,7 +266,7 @@
               "actual": {},
               "testId": "aae7cebe",
               "negative": false,
-              "runtime": 11,
+              "runtime": 8,
               "todo": false,
               "expected": {}
             },
@@ -277,7 +277,7 @@
               "message": "Методы  модели определены",
               "testId": "aae7cebe",
               "negative": false,
-              "runtime": 11,
+              "runtime": 9,
               "todo": false
             }
           ],
@@ -286,7 +286,7 @@
           "failed": 0,
           "passed": 2,
           "total": 2,
-          "runtime": 12,
+          "runtime": 9,
           "assertions": [
             {
               "result": true,
@@ -314,7 +314,7 @@
               "actual": true,
               "testId": "001c88f2",
               "negative": false,
-              "runtime": 10,
+              "runtime": 9,
               "todo": false,
               "expected": true
             },
@@ -326,7 +326,7 @@
               "actual": true,
               "testId": "001c88f2",
               "negative": false,
-              "runtime": 10,
+              "runtime": 9,
               "todo": false,
               "expected": true
             },
@@ -338,7 +338,7 @@
               "actual": "calc(60%)calc(100%)",
               "testId": "001c88f2",
               "negative": false,
-              "runtime": 11,
+              "runtime": 10,
               "todo": false,
               "expected": "calc(60%)calc(100%)"
             }
@@ -348,7 +348,7 @@
           "failed": 0,
           "passed": 3,
           "total": 3,
-          "runtime": 11,
+          "runtime": 10,
           "assertions": [
             {
               "result": true,
@@ -368,7 +368,7 @@
       ],
       "failed": 0,
       "passed": 16,
-      "runtime": 601,
+      "runtime": 522,
       "total": 16
     }
   },
@@ -377,6 +377,6 @@
     "passed": 16,
     "failed": 0,
     "total": 16,
-    "runtime": 610
+    "runtime": 531
   }
 }
