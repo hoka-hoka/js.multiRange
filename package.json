@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node ./src/tests/testconfig.js",
+    "test": "nyc node ./src/tests/testconfig.js",
     "coverage": "nyc report --reporter=lcov --reporter=text-lcov > coverage.lcov && codecov",
     "build:css": "run-s scss",
     "build:js": "run-s compile babel",
