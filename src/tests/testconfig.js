@@ -23,10 +23,10 @@ let a = runQunitPuppeteer(qunitArgs)
     //  Выводим результат теста
     printOutput(result, console);
     // JSON
-    fs.writeFileSync("testReport.json", JSON.stringify(result, null, 2), (err) => {
-      if (err) throw err;
-      console.log('Data written to file');
-    });
+    // fs.writeFileSync("testReport.json", JSON.stringify(result, null, 2), (err) => {
+    //   if (err) throw err;
+    //   console.log('Data written to file');
+    // });
 
     if (result.stats.failed > 0) {
       printFailedTests(result, console);
