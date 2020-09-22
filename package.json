@@ -32,7 +32,7 @@
     "url": "https://github.com/hoka-hoka/multirange/blob/master/LICENSE.txt"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.10.4",
+    "@babel/polyfill": "^7.11.5",
     "jquery": "^3.5.1",
     "onchange": "^7.0.2"
   },
