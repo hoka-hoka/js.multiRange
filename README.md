@@ -5,7 +5,7 @@
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/hoka-hoka/multirange/master.svg?style=flat-square)](https://codecov.io/gh/hoka-hoka/multirange/)
 
 Multirange.js - это крошечный плагин javascript для создания ползунков. Он полностью настраивается и не требует зависимостей. Вы можете использовать его в качестве ползунка с двумя "ирисками" для изменения числовых диапазонов.
-[Демо](https://hoka-hoka.github.io/multirange/ "Необязательная подсказка")
+[Демо](https://hoka-hoka.github.io/js.multiRange/ "Необязательная подсказка")
 
 См. [Документация](https://github.com/hoka-hoka/multirange/wiki) для получения описания общей структуры приложения, а также UML-диаграммы. 
 
