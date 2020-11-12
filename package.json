@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
     "jquery": "^3.5.1",
-    "onchange": "^7.0.2"
+    "onchange": "^7.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
